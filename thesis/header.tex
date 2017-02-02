@@ -1,0 +1,215 @@
+%!TEX root = thesis.tex
+
+\usepackage[nohints]{minitoc}
+\dominitoc
+
+%---------------------------------------------------------------------
+% Fonts and symbol
+%---------------------------------------------------------------------
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{latexsym}
+\usepackage{stmaryrd}
+\usepackage{mathtools}
+\usepackage{dsfont}
+\usepackage{makeidx}
+\usepackage{bibentry}
+\usepackage{enumitem}
+\usepackage{relsize}
+\usepackage{makeidx}
+\usepackage[totoc]{idxlayout}
+
+
+%---------------------------------------------------------------------
+% Theorem-like environments
+%---------------------------------------------------------------------
+
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{fact}[theorem]{Fact}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{property}[theorem]{Property}
+\newtheorem{question}[theorem]{Question}
+
+%---------------------------------------------------------------------
+% Macros:
+%---------------------------------------------------------------------
+
+\newcommand{\comment}[2]{\begin{quote}\sf 
+    [*** {\color{blue} #1} : #2 ***]\end{quote}}
+
+\newcommand{\tinyspace}{\mspace{1mu}}
+\newcommand{\microspace}{\mspace{0.5mu}}
+\newcommand{\negsmallspace}{\mspace{-1.5mu}}
+\newcommand{\op}[1]{\operatorname{#1}}
+\newcommand{\tr}{\operatorname{Tr}}
+\newcommand{\pt}{\operatorname{T}}
+\newcommand{\rank}{\operatorname{rank}}
+\renewcommand{\int}{\operatorname{int}}
+\renewcommand{\vec}{\operatorname{vec}}
+
+\renewcommand{\t}{{\scriptscriptstyle\mathsf{T}}}
+
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\bigabs}[1]{\bigl\lvert #1 \bigr\rvert}
+\newcommand{\Bigabs}[1]{\Bigl\lvert #1 \Bigr\rvert}
+\newcommand{\biggabs}[1]{\biggl\lvert #1 \biggr\rvert}
+\newcommand{\Biggabs}[1]{\Biggl\lvert #1 \Biggr\rvert}
+
+\newcommand{\ip}[2]{\langle #1 , #2\rangle}
+\newcommand{\bigip}[2]{\bigl\langle #1, #2 \bigr\rangle}
+\newcommand{\Bigip}[2]{\Bigl\langle #1, #2 \Bigr\rangle}
+\newcommand{\biggip}[2]{\biggl\langle #1, #2 \biggr\rangle}
+\newcommand{\Biggip}[2]{\Biggl\langle #1, #2 \Biggr\rangle}
+
+
+\newcommand{\norm}[1]{\lVert\tinyspace #1 \tinyspace\rVert}
+\newcommand{\bignorm}[1]{\bigl\lVert\tinyspace #1 \tinyspace\bigr\rVert}
+\newcommand{\Bignorm}[1]{\Bigl\lVert\tinyspace #1 \tinyspace\Bigr\rVert}
+\newcommand{\biggnorm}[1]{\biggl\lVert\tinyspace #1 \tinyspace\biggr\rVert}
+\newcommand{\Biggnorm}[1]{\Biggl\lVert\tinyspace #1 \tinyspace\Biggr\rVert}
+
+\newcommand{\ket}[1]{
+  \lvert\microspace #1 \microspace \rangle}
+
+\newcommand{\bra}[1]{
+  \langle\microspace #1 \microspace \rvert}
+
+\def\I{\mathds{1}}
+\def\BB84{\mathsf{BB84}}
+\def\CHSH{\mathsf{CHSH}}
+
+\newcommand{\setft}[1]{\mathrm{#1}}
+\newcommand{\Density}{\setft{D}}
+\newcommand{\Pos}{\setft{Pos}}
+\newcommand{\Channel}{\setft{C}}
+\newcommand{\Proj}{\setft{Proj}}
+\newcommand{\PPT}{\setft{PPT}}
+\newcommand{\PPTStar}{\setft{PPT}^{\ast}}
+\newcommand{\Unitary}{\setft{U}}
+\newcommand{\Herm}{\setft{Herm}}
+\newcommand{\Lin}{\setft{L}}
+\newcommand{\Trans}{\setft{T}}
+\newcommand{\Sep}{\setft{Sep}}
+\newcommand{\LOCC}{\setft{LOCC}}
+\newcommand{\Ent}{\setft{Ent}}
+\newcommand{\Sym}{\setft{Sym}}
+\newcommand{\Meas}{\setft{Meas}}
+\newcommand{\SepM}{\setft{SepM}}
+\newcommand{\SepD}{\setft{SepD}}
+
+\def\complex{\mathbb{C}}
+\def\real{\mathbb{R}}
+\def\natural{\mathbb{N}}
+\def\integer{\mathbb{Z}}
+
+\def\ns{\textnormal{ns}}
+\def\im{\textnormal{im}}
+
+\def\mA{m_{\reg{A}}}
+\def\mB{m_{\reg{B}}}
+
+\newenvironment{namedtheorem}[1]
+           {\begin{trivlist}\item {\bf #1.}\em}{\end{trivlist}}
+
+\newenvironment{mylist}[1]{\begin{list}{}{
+	\setlength{\leftmargin}{#1}
+	\setlength{\rightmargin}{0mm}
+	\setlength{\labelsep}{2mm}
+	\setlength{\labelwidth}{8mm}
+	\setlength{\itemsep}{0mm}}}
+	{\end{list}}
+
+\def\X{\mathcal{X}}
+\def\Y{\mathcal{Y}}
+\def\Z{\mathcal{Z}}
+\def\H{\mathcal{H}}
+\def\W{\mathcal{W}}
+\def\A{\mathcal{A}}
+\def\B{\mathcal{B}}
+\def\V{\mathcal{V}}
+\def\U{\mathcal{U}}
+\def\C{\mathcal{C}}
+\def\D{\mathcal{D}}
+\def\E{\mathcal{E}}
+\def\F{\mathcal{F}}
+\def\M{\mathcal{M}}
+\def\N{\mathcal{N}}
+\def\R{\mathcal{R}}
+\def\Q{\mathcal{Q}}
+\def\P{\mathcal{P}}
+\def\S{\mathcal{S}}
+\def\T{\mathcal{T}}
+\def\K{\mathcal{K}}
+
+\def\NS{\mathcal{NS}}
+\def\L{\mathcal{L}}
+
+\def\win{\textnormal{win}}
+\def\lose{\textnormal{lose}}
+
+\newcommand{\reg}[1]{\mathsf{#1}}
+
+\def \GammaA{\Gamma_{\reg{A}}}
+\def \GammaB{\Gamma_{\reg{B}}}
+\def \SigmaA{\Sigma_{\reg{A}}}
+\def \SigmaB{\Sigma_{\reg{B}}}
+
+\def\eps{\varepsilon}
+
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\opt}{opt}
+
+\def\PP{\textup{P}}
+\def\DP{\textup{D}}
+
+\usepackage{xcolor,colortbl}
+\definecolor{Gray}{gray}{0.90}
+
+
+%---------------------------------------------------------------------
+% Cross referencing
+%---------------------------------------------------------------------
+\newcommand{\eqnref}[1]{\hyperref[#1]{{(\ref*{#1})}}}
+\newcommand{\thmref}[1]{\hyperref[#1]{{Theorem~\ref*{#1}}}}
+\newcommand{\lemref}[1]{\hyperref[#1]{{Lemma~\ref*{#1}}}}
+\newcommand{\corref}[1]{\hyperref[#1]{{Corollary~\ref*{#1}}}}
+\newcommand{\defref}[1]{\hyperref[#1]{{Definition~\ref*{#1}}}}
+\newcommand{\secref}[1]{\hyperref[#1]{{Section~\ref*{#1}}}}
+\newcommand{\chapref}[1]{\hyperref[#1]{{Chapter~\ref*{#1}}}}
+\newcommand{\figref}[1]{\hyperref[#1]{{Figure~\ref*{#1}}}}
+\newcommand{\tabref}[1]{\hyperref[#1]{{Table~\ref*{#1}}}}
+\newcommand{\remref}[1]{\hyperref[#1]{{Remark~\ref*{#1}}}}
+\newcommand{\appref}[1]{\hyperref[#1]{{Appendix~\ref*{#1}}}}
+\newcommand{\claimref}[1]{\hyperref[#1]{{Claim~\ref*{#1}}}}
+\newcommand{\propref}[1]{\hyperref[#1]{{Proposition~\ref*{#1}}}}
+\newcommand{\exampleref}[1]{\hyperref[#1]{{Example~\ref*{#1}}}}
+\newcommand{\conjref}[1]{\hyperref[#1]{{Conjecture~\ref*{#1}}}}
+
+\makeatletter
+\providecommand*{\cupdot}{%
+  \mathbin{%
+    \mathpalette\@cupdot{}%
+  }%
+}
+\newcommand*{\@cupdot}[2]{%
+  \ooalign{%
+    $\m@th#1\cup$\cr
+    \hidewidth$\m@th#1\cdot$\hidewidth
+  }%
+}
+\makeatother
+
+\makeindex
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\setcounter{minitocdepth}{3}

@@ -1,0 +1,51 @@
+%!TEX root = thesis.tex
+%----------------------------------------------------------------------
+\chapter{Conclusions and open problems}
+\label{chap:conclusions}
+%----------------------------------------------------------------------
+
+In this thesis, we have laid the foundation for the extended nonlocal game model, a superset of the nonlocal game model where the referee also holds a quantum system. 
+
+In Chapter~\ref{chap:extended_nonlocal_games} we defined and analyzed the analogous types of strategies and corresponding game values (standard quantum, unentangled, commuting measurement, and non-signaling) that the players, Alice and Bob, can make use of in such a game. 
+
+In Chapter~\ref{chap:infinite_entanglement}, we took a deeper look at the extended nonlocal game model and showed that there exists an example of an extended nonlocal game where if the dimension of Alice and Bob's shared quantum system is finite, then the standard quantum value will be strictly less than $1$. However, taking the limit as the dimension tends to infinity, the standard quantum value approaches $1$. We saw how this result implies something non-trivial about tripartite steering inequalities, specifically that there exists a tripartite steering inequality for which an infinite-dimensional state is required in order to maximally violate the inequality. 
+
+In Chapter~\ref{chap:extended_npa_hierarchy}, we provided a technique to place upper bounds on the standard quantum value of an extended nonlocal game that generalizes the QC hierarchy, which we referred to as the extended QC hierarchy. We have shown that the hierarchy enjoys many of the same useful properties that the original QC hierarchy does, specifically, convergence to the set of commuting measurement assemblages. We also adapted the techniques of Liang and Doherty~\cite{Liang2007} to place lower bounds on the standard quantum value of extended nonlocal games. Furthermore, we have also presented software that calculates lower and upper bounds using these techniques of certain special classes of extended nonlocal games.
+
+In Chapter~\ref{chap:monogamy_games}, we took these tools and analyzed the class of monogamy-of-entanglement games, a class of games that were initially studied in the context of position-based cryptography~\cite{Tomamichel2013}. We proved a number of properties that these games have including how they behave under parallel repetition, how entanglement may help in Alice and Bob's strategies, etc. 
+
+A number of questions regarding the class of monogamy-of-entanglement games remain open. Specifically, 
+
+\begin{question}
+	{\bf Other examples of monogamy-of-entanglement games where $\omega(G) < \omega^*(G)$}.
+\end{question}
+
+	The complete landscape of how the quantum and classical values compare for different instances of monogamy-of-entanglement games is something to be explored. We only know of a small number of isolated examples where $\omega(G) < \omega^*(G)$ for a monogamy-of-entanglement game, $G$. 
+
+	In Section~\ref{sec:MUB-4-3} a set of $\abs{\Sigma} = 4$ mutually unbiased bases in $\abs{\Gamma} = 3$ dimensions allow Alice and Bob to perform better if they adopt a standard quantum strategy instead of an unentangled strategy. This is the smallest example of a monogamy-of-entanglement game that was found having this property. Is there an example having fewer questions or fewer answers? This example would have to have at least three questions, since we know that for $\abs{\Sigma} = 2$, that the unentangled and standard quantum values agree for any number of outputs as shown in Section~\ref{sec:monog-classical-quantum}. Numerical results indicate that the monogamy-of-entanglement game consisting of $\abs{\Sigma} = 3$ where the referee's measurements are defined in terms of mutually unbiased bases gives no such separation. Is it possible that another monogamy-of-entanglement game with $\abs{\Sigma} = 3$ questions exists where such a separation between unentangled and standard quantum values exists? 
+
+	One brute force method that can be used to check if there exists a monogamy-of-entanglement game for $\abs{\Sigma} = 3$ where a standard quantum strategy will outperform an unentangled strategy is to run a computer search over randomly generated instances of such monogamy-of-entanglement games. The software provided in the Appendix of this thesis~\ref{chap:AppendixA} as well as hosted on the software repository~\cite{Russo2015a} provides a suite of tools that give upper and lower bounds on the quantum value (as described in Chapter~\ref{chap:extended_npa_hierarchy}) as well as tools for calculating the unentangled value of any monogamy-of-entanglement game. One approach would be to randomly generate monogamy-of-entanglement games where $\abs{\Sigma} = 3$ and $\abs{\Gamma} \geq 2$, and see if any example of such games yield $\omega(G) < \omega^*(G)$. This approach does not seem particularly promising, as if such a game were to exist with this property, it most likely has a very specific structure that would be difficult to capture by random generation.
+	
+	On a related note, under what conditions does a monogamy-of-entanglement game based on mutually unbiased bases admit a standard quantum over unentangled strategy advantage? Numerically, it may be checked that a monogamy-of-entanglement game consisting $\abs{\Sigma} = 5$ and $\abs{\Gamma} = 4$ also yields a standard quantum advantage over any unentangled strategy. Does this behavior persist for any monogamy-of-entanglement game defined by mutually unbiased bases as long as the number of inputs is at least $\abs{\Sigma} = 4$, and the number of outputs is at least $\abs{\Gamma} = 3$? Furthermore, do there exist other monogamy-of-entanglement games where $\abs{\Sigma} \geq 4$ and $\abs{\Gamma} \geq 3$ such that $\omega(G) < \omega^*(G)$? Just as a computer search can be constructed where $\abs{\Sigma} = 3$ and $\abs{\Gamma} \geq 2$, one may also formulate a search that checks for larger instances as well. 
+
+\begin{question}
+	Parallel repetition for monogamy-of-entanglement games?
+\end{question} 
+
+It was shown in Section~\ref{sec:monog-strong-parallel-rep} (Theorem~\ref{thm:parallel-rep-monogamy-bound}) that for any monogamy-of-entanglement game defined in terms of projective measurements for the referee where $\abs{\Sigma} = 2$ and $\abs{\Gamma} \geq k$ for some integer $k \geq 1$ that strong parallel repetition holds. Would it be possible to extend from projective measurements to non-projective measurements, such as POVMs? After simulating approximately $10^8$ random instances of monogamy-of-entanglement games with $\abs{\Sigma} = 2$ defined in terms of POVMs, all games were found to obey strong parallel repetition for $r = 2$ rounds of repetition.   
+
+Furthermore, the claim that strong parallel repetition holds for monogamy-of-entanglement games where the measurements of the referee are projective and $\abs{\Sigma} = 2$ assumes that the questions that the referee asks are selected uniformly at random. Is it possible that the strong parallel repetition property will continue to hold despite the distribution of questions? If indeed it does hold under nonuniform distributions, the bound from equation~\eqref{eq:monog-tfkw-bound} from Theorem~\ref{thm:parallel-rep-monogamy-bound} will most likely be in a more complicated form. Ultimately, the overall goal for parallel repetition of monogamy-of-entanglement games would be to either prove or disprove strong parallel repetition for the entire class of such games. 
+
+There also exists other questions and directions for further research. 
+
+\begin{question}
+	Other examples of using extended nonlocal games to study tripartite steering. 
+\end{question}
+
+As mentioned in Chapter~\ref{chap:infinite_entanglement}, we were able to prove a non-trivial statement about a certain type of tripartite steering using the extended nonlocal game model. Given the connection between extended nonlocal games and tripartite steering, are there other possible questions we can answer that become more apparent using the extended nonlocal game model? 
+
+\begin{question}
+	Does there exist a nonlocal game $G$ such that $\omega^*(G) = 1$ and that $\omega_N^*(G) < 1$ for every positive integer $N$?
+\end{question}
+
+As mentioned in Chapter~\ref{chap:infinite_entanglement}, it is known that nonlocal games with quantum questions and quantum answers do satisfy the above property~\cite{Leung2013}. However, it is unknown for nonlocal games with classical questions and classical answers. This question is most likely difficult to solve.

@@ -1,0 +1,738 @@
+%!TEX root = thesis.tex
+%-------------------------------------------------------------------------------
+\chapter{Software}
+\label{chap:AppendixA}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+\section*{Setup}
+%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+\subsection*{Requirements}
+%-------------------------------------------------------------------------------
+
+\begin{itemize}
+    \item MATLAB,
+    \item CVX  $\geq$ 2.1 \cite{Grant2008a},
+    \item QETLAB $\geq$ 0.8 \cite{Johnston2015}.
+\end{itemize}
+
+%-------------------------------------------------------------------------------
+\subsection*{List of functions}
+%-------------------------------------------------------------------------------
+
+\begin{itemize}
+%    \item \texttt{HedgingValue} --- Semidefinite programs to determine the maximum and minimum probabilities with which Alice is able to hedge at least one game out of $r$ games played. 
+    
+    \item \texttt{MonogamyGameValueUB} (by N. Johnston) ---
+        Given a monogamy-of-entanglement game, $G$, the function calculates an upper bound on the quantum value of $G$;
+        
+    \item \texttt{MonogamyGameValueLB} ---
+        Given a monogamy-of-entanglement game, $G$, the function calculates an lower bound on the quantum value of $G$;
+        
+    \item \texttt{MUB} (by N. Johnston) --- generates a set of mutually unbiased bases for a given dimension;
+\end{itemize}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+%-------------------------------------------------------------------------------
+\section{Software Listings}
+%-------------------------------------------------------------------------------
+
+All of the following software listings in this Appendix are hosted on the Github repository found here~\cite{Russo2016c}. 
+
+%\subsection{Semidefinite programs for computing the minimum probability that Alice loses all games in $G_H^n$ (Section~\ref{sec:hedging}) } \label{code:hedging-sdps}
+%
+%The following listing is hosted on the Github repository found here~\cite{Russo2015b}. 
+%
+%\begin{verbatim}
+%function [ x ] = HedgingValue( P0, P1, n, k )
+%
+%[Q0,Q1] = CalculateQ( P0, P1, n, k );
+%
+%cvx_precision best
+%
+%% m(a) Primal
+%cvx_begin sdp quiet
+%    variable X(4^n, 4^n) semidefinite
+%    minimize ( ip(Q0,X) )
+%    subject to
+%        PartialTrace(X,[1:2:2*n],2*ones(1,2*n)) == eye(2^n);
+%cvx_end
+%X_m = X; 
+%
+%% m(a) Dual
+%cvx_begin sdp quiet
+%    variable Y(2^n, 2^n) hermitian
+%    maximize( trace(Y) )
+%    subject to
+%        PiPerm(n) * Tensor( eye(2^n), Y ) * PiPerm(n)' <= Q0; 
+%cvx_end
+%
+%end
+%\end{verbatim}
+%
+%\subsection{Parallel repetition of an interactive proof system with Bell-like inequality violation (Section~\ref{sec:hedging}) } \label{code:hedging}
+%
+%The following listing is hosted on the Github repository found here~\cite{Russo2015b}. 
+%
+%\begin{verbatim}
+%% Define standard qubits as vectors
+%e0 = [1;0]; e1 = [0;1]; 
+%e00 = kron(e0,e0); e01 = kron(e0,e1); 
+%
+%% The state: \alpha|00> + sqrt(1 - \alpha^2)|11> where \alpha = 1/sqrt(2).
+%u = 1/sqrt(2)*e00 + 1/sqrt(2)*e11; 
+%rho = u*u'; 
+%
+%% The state: \cos(\theta)|00> + \sin(\theta)|11> where \theta = \pi/8.
+%v = cos(pi/8)*e00 + sin(pi/8)*e11; 
+%sigma = v*v'; 
+%
+%% Alice's measurement operators:
+%P1 = v*v';							            % Winning measurement
+%P0 = eye(4) - P1;				     % Losing measurement
+%P1 = P1/2; P0 = P0/2; 	% Uniform prob. of selecting winning or losing measurement
+%
+%k = 1;		 % How many games Bob wins with certainty. 
+%n = 2; 		% How many total games played. 
+%
+%% Probability of losing both games is 0.
+%h_val = HedgingValue(P0,P1,n,k)
+%\end{verbatim}\color{lightgray} 
+%\begin{verbatim}     
+%h_val =
+%
+%    -6.86624e-13
+%\end{verbatim}
+%\color{black}
+
+%-------------------------------------------------------------------------------
+\subsection{The first level of the extended QC hierarchy for the BB84 extended nonlocal game} \label{code:first-level-qc-hierarchy-bb84}
+%-------------------------------------------------------------------------------
+
+\begin{verbatim}
+e0 = [1;0]; e1 = [0;1]; ep = [1;1]/sqrt(2); em = [1;-1]/sqrt(2);
+psi0_dm = e0*e0'; psi0_dmc = e1*e1';
+psi1_dm = ep*ep'; psi1_dmc = em*em';
+
+R00 = psi0_dm/2;
+R01 = psi0_dmc/2; 
+R10 = psi1_dm/2;
+R11 = psi1_dmc/2;  
+
+dim = 9;
+A00_B00 = zeros(dim); A01_B01 = zeros(dim); 
+A10_B10 = zeros(dim); A11_B11 = zeros(dim); 
+
+% These are the relative positions of these 
+% entries as indexed by strings in the matrix. 
+A00_B00(2,6) = 1; A00_B00(6,2) = 1;
+A01_B01(3,7) = 1; A01_B01(7,3) = 1;
+A10_B10(4,8) = 1; A10_B10(8,4) = 1;
+A11_B11(5,9) = 1; A11_B11(9,5) = 1;
+
+A = 1/2*( kron(R00, A00_B00) + kron(R01, A01_B01) ) + ...
+	1/2*( kron(R10, A10_B10) + kron(R11,A11_B11) );
+
+cvx_begin sdp
+	cvx_precision best
+    %#ok<*VUNUS>    % suppress MATLAB warnings for equality checks in CVX
+    %#ok<*EQEFF>    % suppress MATLAB warnings for inequality checks in CVX 
+    
+    % Admissible matrix
+    variable M(2*dim,2*dim) hermitian
+    
+    % Sub-block matrices found in the admissible matrix
+    variable M11(dim,dim)
+    variable M12(dim,dim)
+    
+    variable M21(dim,dim)
+    variable M22(dim,dim)
+            
+    M == [ M11 M12;
+    	   M21 M22 ];
+       
+    maximize trace( A*M )      
+    
+    subject to 
+ 
+    % Normalization condition:
+    M11(1,1) + M22(1,1) == 1;
+        
+    for i = 1:dim
+        for j = 1:dim
+            % Ensure commutation relation holds
+            %(i.e. [A,B] = 0)            
+            M11(i,j) == M11(j,i);
+            M12(i,j) == M12(j,i);
+            M21(i,j) == M21(j,i);
+            M22(i,j) == M22(j,i);
+            
+            % Enforce operators as projective measurements
+            % (i.e. the square of the same operator is found in the top
+            % column / row of the diagonal entry). 
+            M11(i,i) == M11(1,i);
+            M11(i,i) == M11(i,1);
+                        
+            M12(i,i) == M12(1,i);
+            M12(i,i) == M12(i,1);
+
+            M21(i,i) == M21(1,i);
+            M21(i,i) == M21(i,1);
+
+            M22(i,i) == M22(1,i);
+            M22(i,i) == M22(i,1);
+        end
+    end  
+
+	% Enforce that projective measurements sum to 1:
+    for i = 1:dim
+    	for j = 1:dim
+    		if mod(i,2) == 0    			
+    		M11(i,j) + M11(i+1,j) == M11(1,j);
+    		M12(i,j) + M12(i+1,j) == M12(1,j);
+			M21(i,j) + M21(i+1,j) == M21(1,j);
+			M22(i,j) + M22(i+1,j) == M22(1,j);
+    		end
+    		if mod(j,2) == 0
+    		M11(i,j) + M11(i,j+1) == M11(i,1);
+    		M12(i,j) + M12(i,j+1) == M12(i,1);
+    		M21(i,j) + M21(i,j+1) == M21(i,1);
+    		M22(i,j) + M22(i,j+1) == M22(i,1);   		    		
+	    	end
+    	end
+    end
+
+    % Ensure that the matrix is PSD.
+    M >= 0;
+cvx_end
+\end{verbatim}
+\color{black}
+\color{lightgray} 
+\begin{verbatim}     
+cvx_optval =
+
+    0.8536
+\end{verbatim}
+\color{black}
+
+%-------------------------------------------------------------------------------
+\subsection{The first level of the extended QC hierarchy for the CHSH extended nonlocal game} \label{code:first-level-qc-hierarchy-chsh}
+%-------------------------------------------------------------------------------
+
+\begin{verbatim}
+e0 = [1;0]; e1 = [0;1]; ep = [1;1]/sqrt(2); em = [1;-1]/sqrt(2);
+psi0_dm = e0*e0'; psi0_dmc = e1*e1';
+psi1_dm = ep*ep'; psi1_dmc = em*em';
+
+R00 = psi0_dm/2;
+R01 = psi0_dmc/2; 
+R10 = psi1_dm/2;
+R11 = psi1_dmc/2;  
+
+dim = 9;
+A00_B00 = zeros(dim); A01_B01 = zeros(dim); 
+A10_B10 = zeros(dim); A11_B11 = zeros(dim); 
+
+% These are the relative positions of these entries as
+% indexed by strings in the matrix. 
+A00_B00(2,6) = 1; A00_B00(6,2) = 1;
+A01_B01(3,7) = 1; A01_B01(7,3) = 1;
+A10_B10(4,8) = 1; A10_B10(8,4) = 1;
+A11_B11(5,9) = 1; A11_B11(9,5) = 1;
+
+A00_B00 = zeros(dim); A01_B01 = zeros(dim); 
+
+A00_B10 = zeros(dim); A01_B11 = zeros(dim);
+
+A10_B00 = zeros(dim); A11_B01 = zeros(dim); 
+
+A10_B11 = zeros(dim); A11_B10 = zeros(dim); 
+
+A00_B00(2,6) = 1; A00_B00(6,2) = 1;
+A00_B10(2,8) = 1; A00_B10(8,2) = 1;
+
+A01_B01(3,7) = 1; A01_B01(7,3) = 1;
+A01_B11(3,9) = 1; A01_B11(9,3) = 1;
+
+A10_B00(4,6) = 1; A10_B00(6,4) = 1;
+A10_B11(4,9) = 1; A10_B11(9,4) = 1;
+
+A11_B01(5,7) = 1; A11_B01(7,5) = 1;
+A11_B10(5,8) = 1; A11_B10(8,5) = 1;
+
+% CHSH ENLG
+A = 1/4*(kron(R00, A00_B00) + kron(R01, A01_B01)) + ...
+    1/4*(kron(R00, A00_B10) + kron(R01, A01_B11)) + ...
+    1/4*(kron(R00, A10_B00) + kron(R01, A11_B01)) + ...
+    1/4*(kron(R10, A10_B11) + kron(R11, A11_B10));
+
+cvx_begin sdp
+	cvx_precision best
+    %#ok<*VUNUS>    % suppress MATLAB warnings for equality checks in CVX
+    %#ok<*EQEFF>    % suppress MATLAB warnings for inequality checks in CVX 
+    
+    % Admissible matrix
+    variable M(2*dim,2*dim) hermitian
+    
+    % Sub-block matrices found in the admissible matrix
+    variable M11(dim,dim)
+    variable M12(dim,dim)
+    
+    variable M21(dim,dim)
+    variable M22(dim,dim)
+            
+    M == [ M11 M12;
+    	   M21 M22 ];
+       
+    maximize trace( A*M )      
+    
+    subject to 
+ 
+    % Normalization condition:
+    M11(1,1) + M22(1,1) == 1;
+        
+    for i = 1:dim
+        for j = 1:dim
+            % Ensure commutation relation holds
+            %(i.e. [A,B] = 0)            
+            M11(i,j) == M11(j,i);
+            M12(i,j) == M12(j,i);
+            M21(i,j) == M21(j,i);
+            M22(i,j) == M22(j,i);
+            
+            % Enforce operators as projective measurements
+            % (i.e. the square of the same operator is found in the top
+            % column / row of the diagonal entry). 
+            M11(i,i) == M11(1,i);
+            M11(i,i) == M11(i,1);
+                        
+            M12(i,i) == M12(1,i);
+            M12(i,i) == M12(i,1);
+
+            M21(i,i) == M21(1,i);
+            M21(i,i) == M21(i,1);
+
+            M22(i,i) == M22(1,i);
+            M22(i,i) == M22(i,1);
+        end
+    end  
+
+	% Enforce that projective measurements sum to 1:
+    for i = 1:dim
+    	for j = 1:dim
+    		if mod(i,2) == 0    			
+    		M11(i,j) + M11(i+1,j) == M11(1,j);
+    		M12(i,j) + M12(i+1,j) == M12(1,j);
+			M21(i,j) + M21(i+1,j) == M21(1,j);
+			M22(i,j) + M22(i+1,j) == M22(1,j);
+    		end
+    		if mod(j,2) == 0
+    		M11(i,j) + M11(i,j+1) == M11(i,1);
+    		M12(i,j) + M12(i,j+1) == M12(i,1);
+    		M21(i,j) + M21(i,j+1) == M21(i,1);
+    		M22(i,j) + M22(i,j+1) == M22(i,1);   		    		
+	    	end
+    	end
+    end
+
+    % Ensure that the matrix is PSD.
+    M >= 0;
+cvx_end
+\end{verbatim}
+\color{black}
+\color{lightgray} 
+\begin{verbatim}     
+cvx_optval =
+
+    0.75783
+\end{verbatim}
+\color{black}
+
+
+%-------------------------------------------------------------------------------
+\subsection{The non-signaling value for the CHSH extended nonlocal game} \label{code:ns-val-chsh-enlg}
+%-------------------------------------------------------------------------------
+
+\begin{verbatim}
+n = 1;
+dim = 2^n;
+
+e0 = [1;0];         e1 = [0;1];
+ep = [1;1]/sqrt(2); em = [1;-1]/sqrt(2);
+eip = (e0 + 1j*e1)/sqrt(2); eim = (e0 - 1j*e1)/sqrt(2);
+
+psi0_dm = e0*e0'; psi0_dmc = e1*e1';
+psi1_dm = ep*ep'; psi1_dmc = em*em';
+psi2_dm = eip*eip'; psi2_dmc = eim*eim';
+
+P = zeros(2,2,2,2);
+%P(:,:,1,1) = (psi0_dm)/2; P(:,:,1,2) = (psi0_dmc)/2;
+%P(:,:,2,1) = (psi1_dm)/2; P(:,:,2,2) = (psi1_dmc)/2;
+
+P = zeros(2,2,2,2,2,2);
+P(:,:,1,1,1,1) = psi0_dm/2;
+P(:,:,1,1,2,2) = psi0_dmc/2;
+
+P(:,:,1,2,1,1) = psi0_dm/2;
+P(:,:,1,2,2,2) = psi0_dmc/2;
+
+P(:,:,2,1,1,1) = psi0_dm/2;
+P(:,:,2,1,2,2) = psi0_dmc/2;
+
+P(:,:,2,2,1,2) = psi1_dm/2;
+P(:,:,2,2,2,1) = psi1_dmc/2;
+
+cvx_begin sdp 
+    %#ok<*VUNUS>    % suppress MATLAB warnings for equality checks in CVX
+    %#ok<*EQEFF>    % suppress MATLAB warnings for inequality checks in CVX
+     
+    variable rho(dim,dim,dim,dim,dim,dim) semidefinite
+    variable sig(dim,dim,dim,dim) hermitian
+    variable xi(dim,dim,dim,dim) hermitian
+    variable tau(dim,dim) hermitian 
+        
+    % construct objective function
+    obj_fun = 0;
+    for x = 1:dim
+        for y = 1:dim
+            for a = 1:dim
+                for b = 1:dim
+                   obj_fun = obj_fun + ip( P(:,:,x,y,a,b), rho(:,:,x,y,a,b) );
+               end
+           end
+       end
+    end
+    
+    maximize  obj_fun
+    
+    subject to 
+    
+    rho_b_sum = sum(rho,6);
+    for x = 1:dim
+        for y = 1:dim
+            for a = 1:dim
+                rho_b_sum(:,:,x,y,a) == sig(:,:,x,a);
+            end
+        end
+    end
+    
+    rho_a_sum = sum(rho,5);
+    for x = 1:dim
+        for y = 1:dim
+            for b = 1:dim
+                rho_a_sum(:,:,x,y,b) == xi(:,:,y,b);
+            end
+        end
+    end
+    
+    sig_a_sum = sum(sig,4);
+    xi_b_sum = sum(xi,4);
+    for x = 1:dim
+        sig_a_sum(:,:,x) == tau;
+    end
+    for y = 1:dim
+        xi_b_sum(:,:,y) == tau;
+    end
+    
+    trace(tau) == 1; 
+    tau >= 0;          
+                        
+cvx_end
+cvx_optval
+\end{verbatim}
+\color{lightgray} 
+\begin{verbatim}     
+cvx_optval =
+
+    0.75
+\end{verbatim}
+\color{black}
+
+%-------------------------------------------------------------------------------
+\subsection{Implementation of the see-saw method for computing lower bounds on the BB84 extended nonlocal game} \label{code:bb84-enlg-lower-bound}
+%-------------------------------------------------------------------------------
+
+\begin{verbatim}
+e0 = [1;0];         e1 = [0;1];
+ep = [1;1]/sqrt(2); em = [1;-1]/sqrt(2);
+
+psi0_dm = e0*e0'; psi0_dmc = e1*e1';
+psi1_dm = ep*ep'; psi1_dmc = em*em';
+
+lvl = 1;
+reps = 1;    
+j_max = 4;
+
+xdim = 2;
+ydim = 2;
+
+num_inputs = 2;
+num_outputs = 2;
+
+I = eye(xdim,ydim);
+
+R = zeros(2,2,2,2,2,2);
+R(:,:,1,1,1,1) = psi0_dm/2;
+R(:,:,1,1,2,2) = psi0_dmc/2;
+R(:,:,2,2,1,1) = psi1_dm/2;
+R(:,:,2,2,2,2) = psi1_dmc/2; 
+
+best = 0;
+    
+for k = 1:j_max
+    k
+    
+    % Generate random bases from the orthogonal colums of randomly 
+    % generated unitary matrices.     
+    B = zeros(xdim,ydim,num_inputs,num_outputs);
+    for y = 1:num_inputs
+        U = RandomUnitary(num_outputs);
+        for b = 1:num_outputs
+            B(:,:,y,b) = U(:,b)*U(:,b)';
+        end
+    end  
+
+
+    % Run the actual alternating projection algorithm between
+    % the two SDPs. 
+    it_diff = 1;
+    prev_win = -1;
+    while it_diff > 10^-6
+        % Optimize over Alice's measurement operators while
+        % fixing Bob's. If this is the first iteration, then the 
+        % previously randomly generated operators in the outer loop are
+        % Bob's. Otherwise, Bob's operators come from running the next
+        % SDP.
+        cvx_begin sdp quiet                
+            variable rho(xdim^(2*reps),ydim^(2*reps),...
+            num_inputs,num_outputs) hermitian
+            variable tau(xdim^(2*reps),ydim^(2*reps)) hermitian
+
+            win = 0;
+            for x = 1:num_inputs
+                for y = 1:num_inputs
+                    for a = 1:num_outputs
+                        for b = 1:num_outputs                               
+                            win = win + ...                            
+                           	trace( (kron(R(:,:,x,y,a,b), ...
+                           	B(:,:,y,b)))' * rho(:,:,x,a) );                                
+                        end
+                    end
+                end
+            end
+            
+            maximize real(win)
+
+            subject to 
+                
+                % Sum over "a" for all "x". 
+                rho_a_sum = sum(rho,4);
+                for x = 1:num_inputs
+                    rho_a_sum(:,:,x) == tau;
+                end
+                                                                           
+                % Enforce that tau is a density operator.
+                trace(tau) == 1;
+                tau >= 0;
+                                   
+                rho >= 0; 
+
+        cvx_end            
+        win = real(win);
+                   
+        % Now, optimize over Bob's measurement operators and fix 
+        % Alice's operators as those coming from the previous SDP.
+        cvx_begin sdp quiet
+                        
+            variable B(xdim,ydim,num_inputs,num_outputs) hermitian 
+                                                         
+            win = 0;
+            for x = 1:num_inputs
+                for y = 1:num_inputs
+                    for a = 1:num_outputs
+                        for b = 1:num_outputs                                                               
+                            win = win + ...
+                             trace( (kron(R(:,:,x,y,a,b), ...
+                             B(:,:,y,b)))' * rho(:,:,x,a) );
+                        end
+                    end
+                end
+            end     
+            
+            maximize real(win)
+            
+            subject to 
+                          
+                % Bob's measurements operators must be PSD and sum to I
+                B_b_sum = sum(B,4);
+                for y = 1:num_inputs
+                    B_b_sum(:,:,y) == I;
+                end
+                B >= 0;                                                           
+                             
+        cvx_end           
+        win = real(win);
+        
+        it_diff = win - prev_win;
+        prev_win = win;
+     end
+    
+    % As the SDPs keep alternating, check if the winning probability
+    % becomes any higher. If so, replace with new best.
+    if best < win
+        
+        best = win;
+
+        % take purification of tau
+        pur = PartialTrace(tau,2);            
+
+        A = zeros(xdim,ydim,num_inputs,num_outputs); 
+        for x = 1:num_inputs
+            for a = 1:num_outputs
+               A(:,:,x,a) = pur^(-1/2) * PartialTrace(rho(:,:,x,a),2) * pur^(-1/2); 
+            end
+        end
+         
+        opt_strat_A = A;
+        opt_strat_B = B;
+    end
+
+end;
+ 
+best
+\end{verbatim}
+\color{lightgray} 
+\begin{verbatim}     
+best =
+
+    0.8536
+\end{verbatim}
+\color{black}
+
+%-------------------------------------------------------------------------------
+\subsection{The BB84 monogamy game (Example \ref{ex:bb84-monogamy-game})} \label{code:bb84-game}
+%-------------------------------------------------------------------------------
+
+\begin{verbatim}
+% Create the BB84 basis.
+e0 = [1;0]; e1 = [0;1];
+ep = [1;1]/sqrt(2); em = [1;-1]/sqrt(2); 
+
+psi0 = e0*e0'; psi1 = e1*e1';
+psip = ep*ep'; psim = em*em'; 
+
+% Referee's first basis: {|0><0|, |1><1|}
+R{1} = {psi0,psi1};
+
+% Referee's second basis: {|+><+|, |-><-|}
+R{2} = {psip,psim};
+
+% BB84 game for a single repetition.
+reps = 1; 
+
+% Level of the extended QC hierarchy 
+lvl = 1;
+
+% Calculate the lower and upper bounds on the BB84 game:
+%   cos^2(pi/8) \approx 0.8536
+lb = MonogamyGameValueLB(R,reps,lvl)
+ub = MonogamyGameValueUB(R,reps,lvl)
+\end{verbatim}\color{lightgray} 
+\begin{verbatim}     
+lb =
+
+    0.8535
+ub =
+
+    0.8535
+\end{verbatim}
+\color{black}
+
+%-------------------------------------------------------------------------------
+\subsection{A monogamy-of-entanglement game defined by mutually unbiased bases (Example \ref{ex:mub-4-3-monogamy-game})} \label{code:mub-4-3}
+%-------------------------------------------------------------------------------
+
+\begin{verbatim}
+% Number of inputs and outputs
+nin = 4;
+nout = 3;
+
+% Create the mutually unbiased bases consisting of 4-inputs and 3-outputs.
+m = MUB(nout); 
+R = {};
+for i = 1:nin
+    for j = 1:nout
+        R{i}{j} = m{i}(:,j) * m{i}(:,j)';
+    end
+end
+
+% Number of repetitions of the game. 
+reps = 1; 
+
+% Level of the extended QC hierarchy.
+lvl = 1;
+
+% Calculate the lower and upper bounds on the quantum value of
+% the mutually unbiased basis game:
+lb = MonogamyGameValueLB(R,reps,lvl)
+ub = MonogamyGameValueUB(R,reps,lvl)
+\end{verbatim}
+\color{lightgray} 
+\begin{verbatim}     
+lb =
+
+    0.6610
+ub =
+
+    0.6667
+\end{verbatim}
+\color{black}
+
+%-------------------------------------------------------------------------------
+\subsection{A counter-example to strong parallel repetition for monogamy-of-entanglement games with non-signaling provers (Proof of Theorem \ref{thm:no-spr-non-signaling})} \label{code:ns-counter-example-monogamy-game}
+%-------------------------------------------------------------------------------
+
+\begin{verbatim}
+% Create the BB84 basis.
+e0 = [1;0]; e1 = [0;1];
+ep = [1;1]/sqrt(2); em = [1;-1]/sqrt(2); 
+
+psi0 = e0*e0'; psi1 = e1*e1';
+psip = ep*ep'; psim = em*em'; 
+
+% Referee's first basis: {|0><0|, |1><1|}
+R{1} = {psi0,psi1};
+
+% Referee's second basis: {|+><+|, |-><-|}
+R{2} = {psip,psim};
+
+% BB84 game for a single repetition.
+reps = 1; 
+
+% Level of the extended QC hierarchy corresponds to non-signaling 
+lvl = 0;
+
+% Calculate the lower and upper bounds on the BB84 game:
+rep_1_val = MonogamyGameValue(R,reps,lvl)
+
+% BB84 game for a single repetition.
+reps = 2; 
+
+% Calculate the lower and upper bounds on the BB84 game:
+rep_2_val = MonogamyGameValue(R,reps,lvl)
+\end{verbatim}
+\color{lightgray} 
+\begin{verbatim}     
+rep_1_val =
+
+    0.8536
+
+rep_2_val =
+
+    0.7383
+\end{verbatim}
+\color{black}

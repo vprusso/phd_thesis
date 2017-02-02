@@ -1,0 +1,226 @@
+%!TEX root = thesis.tex
+%
+% T I T L E   P A G E
+% -------------------
+% Last updated May 24, 2011, by Stephen Carr, IST-Client Services
+% The title page is counted as page `i' but we need to suppress the
+% page number.  We also don't want any headers or footers.
+\pagestyle{empty}
+\pagenumbering{roman}
+
+% The contents of the title page are specified in the "titlepage"
+% environment.
+\begin{titlepage}
+        \begin{center}
+        \vspace*{1.0cm}
+
+        \Huge
+        {\bf Extended nonlocal games}
+
+        \vspace*{1.0cm}
+
+        \normalsize
+        by \\
+
+        \vspace*{1.0cm}
+
+        \Large
+        Vincent Russo \\
+
+        \vspace*{3.0cm}
+
+        \normalsize
+        A thesis \\
+        presented to the University of Waterloo \\ 
+        in fulfillment of the \\
+        thesis requirement for the degree of \\
+        Doctor of Philosophy \\
+        in \\
+        Computer Science \\
+
+        \vspace*{2.0cm}
+
+        Waterloo, Ontario, Canada, 2017 \\
+
+        \vspace*{1.0cm}
+
+        \end{center}
+\end{titlepage}
+
+\noindent\textbf{Copyright notice.}
+Chapters~\ref{chap:extended_nonlocal_games} and~\ref{chap:extended_npa_hierarchy} contain material from~\cite{Johnston2015a}, which is copyrighted by the Proceedings of the Royal Society, Chapter~\ref{chap:infinite_entanglement} contains material from~\cite{Russo2016}.% which is copyrighted by ????, and Chapter~\ref{chap:hedging} contains material from~\cite{Arunachalam2013}, which is copyrighted by ???.
+\\ \\
+Remaining material is:
+\copyright\ Vincent Russo 2017 \\
+
+
+% The rest of the front pages should contain no headers and be numbered using Roman numerals starting with `ii'
+\pagestyle{plain}
+\setcounter{page}{2}
+
+\cleardoublepage % Ends the current page and causes all figures and tables that have so far appeared in the input to be printed.
+% In a two-sided printing style, it also makes the next page a right-hand (odd-numbered) page, producing a blank page if necessary.
+ 
+
+
+% D E C L A R A T I O N   P A G E
+% -------------------------------
+  % The following is the sample Delaration Page as provided by the GSO
+  % December 13th, 2006.  It is designed for an electronic thesis.
+  \noindent
+I hereby declare that I am the sole author of this thesis. This is a true copy of the thesis, including any required final revisions, as accepted by my examiners.
+
+  \bigskip
+  
+  \noindent
+I understand that my thesis may be made electronically available to the public.
+
+\cleardoublepage
+%\newpage
+
+% A B S T R A C T
+% ---------------
+
+\begin{center}\textbf{Abstract}\end{center}
+
+The notions of \emph{entanglement} and \emph{nonlocality} are among the most striking ingredients found in quantum information theory. One tool to better understand these notions is the model of \emph{nonlocal games}; a mathematical framework that abstractly models a physical system. The simplest instance of a nonlocal game involves two players, Alice and Bob, who are not allowed to communicate with each other once the game has started and who play cooperatively against an adversary referred to as the referee. 
+
+%A nonlocal game begins when the referee asks each of the players a question, the players respond to the referee with their respective answers, and the referee decides if the players win or lose based on the questions asked and answers received. While the players are aware of the answers needed to yield a winning outcome, they only know the question asked directly to them and not to the other player. Prior to the start of the game, the players may agree upon a joint strategy. A strategy that consists of simply fixing a response in advance is achievable through a \emph{classical strategy}. A \emph{quantum strategy} is more involved, but may allow the players to win with a higher probability. In such a strategy, the players may share a quantum state prior to the start of the game to \emph{correlate} their answers in some way that is impossible to do with a classical strategy. 
+
+The focus of this thesis is a class of games called \emph{extended nonlocal games}, of which nonlocal games are a subset. In an extended nonlocal game, the players initially share a tripartite state \emph{with the referee}. In such games, the winning conditions for Alice and Bob may depend on outcomes of measurements made by the referee, on its part of the shared quantum state, in addition to Alice and Bob's answers to the questions sent by the referee. 
+
+We build up the framework for extended nonlocal games and study their properties and how they relate to nonlocal games. In doing so, we study the types of \emph{strategies} that Alice and Bob may adopt in such a game. For instance, we refer to strategies where Alice and Bob use quantum resources as \emph{standard quantum strategies} and strategies where there is an absence of entanglement as an \emph{unentangled strategy}. These formulations of strategies are purposefully reminiscent of the respective quantum and classical strategies that Alice and Bob use in a nonlocal game, and we also consider other types of strategies with a similar correspondence for the class of extended nonlocal games. 
+
+We consider the \emph{value} of an extended nonlocal game when Alice and Bob apply a particular strategy, again in a similar manner to the class of nonlocal games. Unlike computing the unentangled value where tractable algorithms exist, directly computing the standard quantum value of an extended nonlocal game is an intractable problem. We introduce a technique that allows one to place upper bounds on the standard quantum value of an extended nonlocal game. Our technique is a generalization of what we refer to as the \emph{QC hierarchy} which was studied independently in works by Doherty, Liang, Toner, and Wehner as well as by Navascu\'{e}s, Pironio, and Ac\'{i}n. This technique yields an upper bound approximation for the quantum value of a nonlocal game.
+
+We also consider the question of whether or not the dimensionality of the state that Alice and Bob share as part of their standard quantum strategy makes any difference in how well they can play the game. That is, does there exist an extended nonlocal game where Alice and Bob can win with a higher probability if they share a state where the dimension is infinite? We answer this question in the affirmative and provide a specific example of an extended nonlocal game that exhibits this behavior.   
+
+We study a type of extended nonlocal game referred to as a \emph{monogamy-of-entanglement game}, introduced by Tomamichel, Fehr, Kaniewski, and Wehner, and present a number of new results for this class of game. Specifically, we consider how the standard quantum value and unentangled value of these games relate to each other. We find that for certain classes of monogamy-of-entanglement games, Alice and Bob stand to gain no benefit in using a standard quantum strategy over an unentangled strategy, that is, they perform just as well without making use of entanglement in their strategy. However, we show that there does exist a monogamy-of-entanglement game in which Alice and Bob do perform strictly better if they make use of a standard quantum strategy. We also analyze the \emph{parallel repetition} of monogamy-of-entanglement games; the study of how a game performs when there are multiple instances of the game played independently. We find that certain classes of monogamy-of-entanglement games obey \emph{strong parallel repetition}. In contrast, when Alice and Bob use a non-signaling strategy in a monogamy-of-entanglement game, we find that strong parallel repetition is not obeyed. 
+
+
+\cleardoublepage
+\newpage
+
+% A C K N O W L E D G E M E N T S
+% -------------------------------
+
+\begin{center}\textbf{Acknowledgements}\end{center}
+
+I am greatly indebted to my advisors John Watrous and Michele Mosca for their guidance throughout the course of my studies. John is an incredible supervisor and one that I have been exceptionally lucky to have had the pleasure of working with. John's attention to detail and sense of humour has greatly impacted my own approach to science and life in general. I am truly humbled by John's command of mathematical rigour and writing clarity. I am also incredibly grateful to Mike, for including me in the quantum circuits group and enabling me to take part in internships.      
+
+Gratitude is also due to professors Richard Cleve, Debbie Leung, Vern Paulsen, and Stephanie Wehner for taking their valuable time to serve on my defence committee. I thank them greatly for their input. 
+
+Throughout my studies, I've been lucky enough to work with some outstanding students, post-doctoral researchers, and professors. Many thanks are due to Nathaniel Johnston, Rajat Mittal, Matthew Pusey, Jamie Sikora, William Slofstra, Thomas Vidick, and others who were always willing to discuss interesting ideas and explain abstract concepts to me. 
+
+My time at IQC and in Waterloo has been full of great people and experiences. I wish to thank Sascha Agne, Srinivasan Arunachalam, Alessandro Cosentino, Arnaud Carignan-Dugas, Maria Kieferova, Robin Kothari, Anirudh Krishna, Vinayak Pathak, Dan Puzzuoli, Yuval Sanders, Basil Singer, Marco Shum, Zak Webb, and the students and faculty of IQC for making my time here incredibly enjoyable. I sincerely hope that we keep in touch as our journeys continue. Thanks are also due to the excellent administrative support of IQC and DC for always being able to quickly resolve any technical issues in running software for experiments.
+
+To my ``urban planning'' circle of friends, thank you for making me an honorary member of the group, and accepting me even though I'm in computer science! You have been my strongest support network and my best friends in Waterloo. I will sorely miss our many political conversations and random adventures. To my musically inclined friends Jaden Hellmann, Alexandar Smith, Will Towns, and Cody Veal, our jam sessions and miscellaneous discussions were a welcome creative distraction from research. 
+
+To my friends back home in Michigan, I thank you for understanding my absence. Thanks to Kenny G., Sara Gilhooly, Alex, Nick, and Rachel Marowsky, Mike Sanderson, Ryan Seiler, Joe Sousa, Ryan Trainor, and Matt Wolford. Whenever I've been back to visit, I was always warmly received. 
+
+I also extend gratitude toward the hospitality received during my internships. I thank BBN Raytheon, specifically Richard Lazarus, Andrei Lapets, and Marcus da Silva for allowing me to contribute to many interesting projects. 
+
+I cannot express enough gratitude toward my family for their encouragement, love, and support. My brothers Joey and Matthew, and my sister Theresa and her husband Colin. I also thank Beth Russo and Lauren Kisic, my Aunt Cathy, Uncle Dan, Uncle John, Uncle Steve, and Aunt Marie for a lifetime of support. A sincere and heartfelt thanks are due to my parents James and Marjorie Russo, who have always nurtured and encouraged my interests, whatever they may have been, and for their seemingly endless wells of love and support. 
+
+Lastly, I thank Paulina Rodriguez. Your support, love, and encouragement throughout this journey cannot be overstated. This document is as much a part of me as it is a part of you. I love you. 
+
+For all of those who I did not mention by name, please accept my sincerest apologies, and know that this document is a testament to your encouragement and support. Thank you all.
+
+\cleardoublepage
+\newpage
+
+% D E D I C A T I O N
+% -------------------
+
+\begin{center}\textbf{Dedication}\end{center}
+
+This thesis is dedicated to those who have shaped my life, but no longer walk with me through it. My grandparents Anthony and Jean Russo, Ben Benton, my Aunt Alice, and my second moms, Denise Marowsky and Debbie Gilhooly.  
+
+\cleardoublepage
+\newpage
+
+% T A B L E   O F   C O N T E N T S
+% ---------------------------------
+\renewcommand\contentsname{Table of Contents}
+\tableofcontents
+\cleardoublepage
+\phantomsection
+%\newpage
+
+% L I S T   O F   T A B L E S
+% ---------------------------
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+\cleardoublepage
+\phantomsection		% allows hyperref to link to the correct page
+%\newpage
+
+% L I S T   O F   F I G U R E S
+% -----------------------------
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+\cleardoublepage
+\phantomsection		% allows hyperref to link to the correct page
+%\newpage
+
+% L I S T   O F   S Y M B O L S
+% -----------------------------
+% To include a Nomenclature section
+% \addcontentsline{toc}{chapter}{\textbf{Nomenclature}}
+% \renewcommand{\nomname}{Nomenclature}
+% \printglossary
+% \cleardoublepage
+% \phantomsection % allows hyperref to link to the correct page
+% \newpage
+
+%%%-----------------------------------------------------------------------------%
+%\section*{List of Symbols} \label{sec:Symbols}
+%%-----------------------------------------------------------------------------%
+%\addcontentsline{toc}{chapter}{List of Symbols}
+%\begin{center}
+%    \begin{tabular}{  l  l  l  l }
+%
+%{\bf Basic Notation} \\
+%  $\Sigma, \Gamma, \Delta, \dots$ & & & finite, non-empty sets \\
+%  $\X, \Y, \Z, \dots$ & & & complex Euclidean space also referred to as Hilbert spaces \\
+%  $u, v, w, \cdots$ & & & vectors in complex Euclidean space \\
+%  $\delta_{i,j}$ & & & Kronecker delta function: If $i = j$ then $\delta_{i,j} = 1$ and otherwise 0 \\
+%	$\ip{A}{B}$ & & & inner product between matrices $A$ and $B$ \\
+%	$\norm{\cdot}_1$ & & & trace norm \\
+%	$\norm{\cdot}$ & & & infinity or maximum norm \\
+%	$\lambda(\cdot)$ & & & vector of eigenvalues in non-increasing order \\
+%
+%\\
+%{\bf Classes of Operators} \\
+%	$\Lin(\X)$ & & &  shorthand for $\Lin(\X,\X)$ \\
+%  $\Lin(\X, \Y)$ & & &  set of all linear operators from $\Lin(\X)$ to $\Lin(\Y)$ \\
+%  $\Density(\X)$ & & & set of all density operators \\
+%  $\Herm(\X)$ & & & set of all Hermitian operators \\
+%  $\Pos(\X)$ & & & set of all positive semidefinite operators \\
+%  $\Unitary(\X)$ & & & set of all unitary operators \\
+%  %$\CP(\X)$ & & & set of all completely positive maps \\
+%  %$\Trans(\X)$ & & & set of all trace-preserving maps \\
+%  %$\Channel(\X)$ & & & set of all completely positive and trace preserving maps \\
+%  $\Sep(\X^{\setft{A}} : \X^{\setft{B}})$ & & & set of all separable operators \\ 
+%  %$\SepD(\X^{\setft{A}} : \X^{\setft{B}})$ & & & set of all separable density operators \\ 
+%  $\I_{\X}$ & & & identity operator on $\Lin(\X,\X)$ \\
+%	$\vec(\X)$ & & & maps $\Lin(\X,\Y)$ to $\Y \otimes \X$\\
+%	$\dim(\X)$ & & & dimensionality of complex Euclidean space $\X$ \\
+%
+%\\
+%{\bf Quantum Information} \\
+%   $\ket{+}, \ket{-}$ & & & the states $(\ket{0} + \ket{1})/\sqrt{2}$ and $(\ket{0} - \ket{1})\sqrt{2}$ respectively \\
+%   $\Phi, \Psi, \dots$ & & & a linear superoperator i.e. quantum channel \\
+%   $\rho, \sigma, \tau \dots$ & & & quantum states described as density operators \\
+%   $\reg{X}, \reg{Y}, \reg{Z}, \dots$ & & &  quantum registers\\
+%   $\otimes$ & & & tensor product between two matrices $A$ and $B$ \\
+%   $\tr_{\X}$ & & & partial trace over the system in $\X$ \\
+%%   $\fid(\rho, \sigma)$ & & & fidelity of states $\rho$ and $\sigma$ \\
+%    \end{tabular}
+%\end{center}
+%
+%\newpage
+
+% Change page numbering back to Arabic numerals
+\pagenumbering{arabic}
+

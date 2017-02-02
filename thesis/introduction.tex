@@ -1,0 +1,119 @@
+%!TEX root = thesis.tex
+%-------------------------------------------------------------------------------
+\chapter{Introduction}
+\label{chap:introduction}
+%-------------------------------------------------------------------------------
+
+The model of two player games has served an important role in developing our understanding of theoretical computer science and quantum information. In such a game, we consider the players, referred to as \emph{Alice} and \emph{Bob}, who are not allowed to communicate to each other once the game begins, and who play cooperatively against a party referred to as the \emph{referee}. The game begins when the referee asks questions to Alice and Bob to which they must respond. When Alice and Bob send back the responses to the referee, the referee evaluates the questions and answers against a criterion that is publicly known to the referee, Alice, and Bob that determines what constitutes a winning or losing outcome. 
+
+A primary challenge that arises when studying these games is to determine the maximum probability with which Alice and Bob are able to achieve a winning outcome. This probability is highly dependent on the type of \emph{strategy} that Alice and Bob use in the game. Before the game begins, Alice and Bob are free to communicate with each other and decide on the type of strategy they will use. 
+
+A \emph{classical strategy} is one in which Alice and Bob decide on a deterministic mapping of outputs for every possible combination of inputs they will receive in the game. The corresponding maximum probability achieved when Alice and Bob employ a classical strategy is referred to as the \emph{classical value} of the game. 
+
+Another type of strategy called a \emph{quantum strategy} is one in which Alice and Bob are allowed to use nonlocal resources. This type of strategy may involve Alice and Bob sharing an arbitrary entangled state prior to the start of the game along with sets of measurements that they may apply to their portions of the state after they each receive questions from the referee. The corresponding maximum probability achieved when Alice and Bob use a quantum strategy is referred to as the \emph{quantum value} of the game. 
+
+For certain games, the probability that Alice and Bob obtain a winning outcome is higher if they use a quantum strategy as opposed to a classical one. This striking separation is one primary motivation to study nonlocal games, as it provides examples of tasks that benefit from the manipulation of quantum information. Indeed, the model of nonlocal games have been widely studied, especially in recent years~\cite{Cleve2004, Brassard2005, Cleve2008, Doherty2008,Kempe2010,Kempe2010a,Kempe2011,Junge2011a,Buhrman2013,
+Regev2013,Dinur2013,Vidick2013,Cleve2014}. 
+
+The ability to calculate the quantum value for an arbitrary nonlocal game is a highly non-trivial task. Indeed, the quantum value is only known in special cases for certain nonlocal games. For an arbitrary nonlocal game, there exist approaches that place upper and lower bounds on the quantum value. One such approach (that we refer to as the QC hierarchy as done in~\cite{Coudron2015} and was introduced in~\cite{Doherty2008, Navascues2007}), is implemented as a hierarchy of optimization problems, referred to as \emph{semidefinite programs}, which are optimization problems where the constraints are semidefinite. Convergence is guaranteed from the QC hierarchy, yet it may be intractable to compute. The lower bound approach is also calculated using the technique of semidefinite programming~\cite{Liang2007}. While this method is more efficient to carry out, it does not guarantee convergence to the quantum value (although in certain cases, it is attained). 
+
+In a nonlocal game, the referee is only responsible for sending questions, receiving answers, and evaluating whether the selection of questions and respective answers yields a winning or losing outcome. In this thesis, we consider a generalization of the nonlocal game model where the referee is provided with part of a quantum system prepared by Alice and Bob, and in addition, also has sets of measurements that he may apply to his portion of the quantum system to determine the outcome of the game. This type of game is referred to as an \emph{extended nonlocal game}. Extended nonlocal games constitute a wider class of games of which nonlocal games are a subset. For instance, an extended nonlocal game where the dimension of the quantum system held by the referee is one-dimensional is precisely a nonlocal game. \emph{Monogamy-of-entanglement games} are a special type of extended nonlocal game introduced in~\cite{Tomamichel2013} that has been studied with respect to the problem of position-based cryptography. 
+
+%One of the primary contributions of this dissertation is the formalization and study of the extended nonlocal game model. In formalizing the extended nonlocal game model, we also broaden the landscape of monogamy-of-entanglement games by providing a number of results on the properties of these games. We consider how monogamy-of-entanglement games behave under \emph{parallel repetition}, which is the sequential repetition of a game with many pairs of independent players. We also provide a heuristic method to upper and lower bound the quantum values of extended nonlocal games. Indeed, the NPA hierarchy is a special case of our method, and we generalize their hierarchy to be applied to the entire class of extended nonlocal games. We also consider whether there exists an extended nonlocal game that can be won with a higher probability if Alice and Bob share an infinite dimensional state, as opposed to a state of finite dimension. Indeed, such a game does exist, and we study the implications of this result. Many of the specific results that we present in this thesis are mentioned in the next section. 
+
+%-------------------------------------------------------------------------------
+\section{Summary of the results}
+%-------------------------------------------------------------------------------
+In addition to introducing the model of extended nonlocal games, we prove the following results:
+
+\begin{itemize}
+
+%	\item We prove that there exists an extended nonlocal game where if the dimension of Alice and Bob's quantum system, $n$, is finite, then the standard quantum value will be strictly less than $1$. However, taking the limit as $n$ goes to infinity, the standard quantum value approaches $1$. That is, Alice and Bob perform strictly worse in the event that they share a state of finite dimension. 
+	\item We prove that there exists a class of extended nonlocal game for which no finite-dimensional quantum strategy can be optimal. This result further implies the existence of a tripartite steering inequality for which an infinite-dimensional quantum state is required in order to achieve maximal violation. 
+
+	\item We generalize the QC hierarchy, a technique for providing upper bounds on nonlocal games, to the case of extended nonlocal games. We also present a method based on the see-saw algorithm of Liang and Doherty~\cite{Liang2007} that provides lower bounds on the class of extended nonlocal games. 	
+
+%	\item Extended nonlocal games can be thought to consist of three rounds of communication, the first consists of Alice and Bob sending a quantum state to the referee, and the second and third consist of Alice and Bob receiving and sending classical information. We ask what happens to the model if we exchange the type of communication for any of the three rounds with a different form of communication. For instance, we find that allowing Alice and Bob to respond with quantum answers in the third round gives Alice and Bob no benefit over simply sending classical answers. 
+
+	\item We present a number of results about the class of \emph{monogamy-of-entanglement games}, which are a specific type of extended nonlocal game. Specifically, we show that: 
+	
+		\begin{itemize}
+			\item Monogamy-of-entanglement games obey strong parallel repetition when the size of the question set has 2 elements and the size of the answer set is arbitrary, and the sets of measurements used by the referee are projective. 
+
+			\item Monogamy-of-entanglement games do not obey strong parallel repetition when the players use non-signaling strategies. 
+
+			\item We present a class of monogamy-of-entanglement games where the size of the question set has 2 elements and the size of the answer set is arbitrary where Alice and Bob can always achieve the quantum value of such a game by using a strategy that does not require them to store quantum information. 
+
+			\item There exists a monogamy-of-entanglement game in which the size of the question set has 4 elements and the answer set has 3 elements, for which Alice and Bob must store quantum information to play optimally. 
+		\end{itemize}
+
+\end{itemize}
+
+%-------------------------------------------------------------------------------
+\section{Overview}
+%-------------------------------------------------------------------------------
+We assume familiarity with the basic notions of quantum computation and quantum information as can be found in~\cite{Nielsen2001}. It may also be helpful to have a familiarity with the terminology and mathematics in the first two chapters of~\cite{Watrous2015}, although we shall also attempt a self-contained presentation of the necessary tools needed to understand the content herein. Throughout this thesis, we also make frequent use of the mathematical tool of semidefinite programming. Supplementary resources for the interested reader can be found in lecture 7 of~\cite{Watrous2004} as well as~\cite{Boyd2004}. 
+
+In Chapter~\ref{chap:preliminaries}, we review the basics of quantum information, nonlocal games, and relevant notation that will be used in the remainder of this thesis. 
+
+%In Chapter~\ref{chap:nonlocal_games}, we present an overview on the subject of nonlocal games that serves as an essential backdrop to the subsequent results in this thesis. 
+
+In Chapter~\ref{chap:extended_nonlocal_games}, we introduce the model of extended nonlocal games that is built upon the model of nonlocal games. 
+
+In Chapter~\ref{chap:infinite_entanglement}, we present an analysis of certain properties of the extended nonlocal game model and give an example of an extended nonlocal game for which no finite-dimensional quantum strategy can be optimal. 
+
+In Chapter~\ref{chap:extended_npa_hierarchy}, we present a method that provides upper and lower bounds on the value of an extended nonlocal game. 
+
+In Chapter~\ref{chap:monogamy_games}, we study the class of extended nonlocal games referred to as monogamy-of-entanglement games and prove a number of properties that these games exhibit. 
+
+%XXX
+%In Chapter~\ref{chap:hedging}, we present an example of a specific type of nonlocal game that exhibits a property where the use of quantum resources provides a higher chance of winning than if classical resources were used. 
+
+Finally, in Chapter~\ref{chap:conclusions}, we present conclusions and pose open questions that may be of interest for future research. Supplementary software used in this thesis is also provided in Appendix~\ref{chap:AppendixA}, as well as on the software repositories hosted here~\cite{Russo2015a} and here~\cite{Russo2016a}. 
+
+\noindent The following is a list of existing work directly related to the content in this document:
+
+\begin{itemize}
+
+	\item[$\bullet$]
+	V. Russo and J. Watrous.
+	\textbf{Extended nonlocal games from quantum-classical games}. 2016,
+	\cite{Russo2016}.
+
+	\item[$\bullet$]
+	N. Johnston, R. Mittal, V. Russo, and J. Watrous.
+	\textbf{Extended nonlocal games and monogamy-of-entanglement games}. \textit{Proc.~R.~Soc.~A 472:20160003}, 2016,
+	\cite{Johnston2015a}. 
+			
+\end{itemize}
+The following is a list of existing work completed during my Ph.D., but not directly related to my thesis work:
+\begin{itemize}
+
+	\item[$\bullet$] 
+	S. Bandyopadhyay, A. Cosentino, N. Johnston, V. Russo, J. Watrous, and N. Yu. 
+	\textbf{Limitations on separable measurements by convex optimization}. 
+	\textit{IEEE Transactions on Information Theory}, 2015,
+	\cite{Bandyopadhyay2015}.
+	
+	\item[$\bullet$]
+	S. Arunachalam, N. Johnston, and V. Russo.
+	\textbf{Is absolute separability determined by the partial transpose?}. \textit{Quantum Information \& Computation}, 2015,
+	\cite{Arunachalam2015}.
+
+	\item[$\bullet$]
+	D. Gosset, V. Kliuchinikov, M. Mosca, and V. Russo.
+	\textbf{An algorithm for the T-count}. \textit{Quantum Information \& Computation}, 2014,
+	\cite{Gosset2014}.
+	
+	\item[$\bullet$]
+	A. Cosentino and V. Russo.
+	\textbf{Small sets of locally indistinguishable orthogonal maximally entangled states}. 
+	\textit{Quantum Information \& Computation},  2014,
+	\cite{Cosentino2014}.
+
+	\item[$\bullet$]
+	S. Arunachalam, A. Molina, and V. Russo.
+	\textbf{Quantum hedging in two-round prover-verifier interactions}. \textit{arXiv:1310.7954}, 2013,
+	\cite{Arunachalam2013}.
+	
+\end{itemize}
