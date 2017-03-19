@@ -135,7 +135,7 @@ as well as
 
 \subsubsection*{Norms}
 
-For any complex Euclidean spaces $\X$ and $\Y$ and any operator $A \in \Lin(\X,\Y)$, we define the \index{norm}{\emph{norm}} of $A$, denoted as $\norm{A}$, as a function which satisfies the following conditions:
+For any complex Euclidean spaces $\X$ and $\Y$ and any operator $A \in \Lin(\X,\Y)$, we define a \index{norm}{\emph{norm}} of $A$, denoted as $\norm{A}$, as a function which satisfies the following conditions:
 \begin{enumerate}
 	\item $\norm{A} \geq 0$ for all $A \in \Lin(\X,\Y)$,
 	\item $\norm{A} = 0$ if and only if $A = 0$ for all $A \in \Lin(\X,\Y)$,
@@ -306,7 +306,7 @@ The \index{Schmidt decomposition}{\emph{Schmidt decomposition}} of an arbitrary 
 
 \subsubsection*{Convexity}
 
-We shall denote finite-dimensional real or complex vector spaces as either $\V$ or $\W$. In this section, the space $\V$ will typical denote either $\real^n$ or $\complex^n$, for some finite $n > 1$, and $\W$ shall be a subset of $\V$. We say that a set $\W \subseteq \V$ is \index{convex}{\emph{convex}} if for all $u,v \in \W$ and all $\lambda \in [0,1]$ it is true that 
+We shall denote finite-dimensional real or complex vector spaces as either $\V$ or $\W$. In this section, the space $\V$ will typically denote either $\real^n$ or $\complex^n$, for some finite $n > 1$, and $\W$ shall be a subset of $\V$. We say that a set $\W \subseteq \V$ is \index{convex}{\emph{convex}} if for all $u,v \in \W$ and all $\lambda \in [0,1]$ it is true that 
 \begin{align}
 	\lambda u + (1-\lambda)v \in \W.
 \end{align}
@@ -373,17 +373,17 @@ for some operator $X \in \B(\H)$. Given an orthonormal basis $\{e_n : n \in \nat
 \begin{align}
 	\sum_{n \in \natural} \bigip{ \abs{A} e_n}{e_n} < \infty,
 \end{align} 
-where $\abs{A}$ denotes that $A^*A$ is positive and therefore has a square root $\sqrt{A^*A} \in \B(\H)$. For $A \in \B(\H)$, define 
+where $\abs{A} = \sqrt{A^*A} \in \B(\H)$. For $A \in \B(\H)$, define 
 \begin{align}
 	\norm{A}_1 = \sum_{n \in \natural} \bigip{\abs{A}e_n}{e_n}.
 \end{align}
 We may therefore say that a bounded operator $A \in \B(\H)$ is also trace class if $\norm{A}_1 < \infty$. A density operator $\rho \in \B(\H)$ is both a bounded operator and a trace class operator.  
 
-Let $\H$ be a Hilbert space and let $s(n) = u_n$ with $u_n \in \H$ for all $n \in \natural$ be a sequence in the space $\H$. Then we say that the sequence $s$ \index{weak-* convergence}{\emph{converges weak-*}} to a vector $u \in \H$ if 
+Let $\Y$ be a Banach space and let $\X = \Y^*$. Then we say that a sequence \index{weak-* convergence}{\emph{converges weak-*}} to a vector $f \in \X$ if 
 \begin{align}
-	\lim_{n \rightarrow \infty} \ip{u_n}{v} = \ip{u}{v},
+	\lim_{n \rightarrow \infty} f_n(v) = f(v),
 \end{align}
-for all $v \in \H$. A consequence of the so-called \index{Banach-Alaoglu theorem}{\emph{Banach-Alaoglu theorem}}~\cite{Rudin1991} that we will use in Chapter~\ref{chap:extended_npa_hierarchy} is that every bounded sequence has a weak-* convergent subsequence. 
+for all $v \in \Y$. A consequence of the so-called \index{Banach-Alaoglu theorem}{\emph{Banach-Alaoglu theorem}}~\cite{Rudin1991} that we will use in Chapter~\ref{chap:extended_npa_hierarchy} is that every bounded sequence has a weak-* convergent subsequence provided $\Y$ is separable. 
  
 %We first define the notion of convergence for infinite-dimensional spaces. Let 
 %\begin{align}

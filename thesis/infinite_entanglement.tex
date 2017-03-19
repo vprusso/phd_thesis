@@ -87,9 +87,9 @@ and for every positive integer $N$ it holds that
 
 In this section, we will state and prove an analogous theorem to Theorem~\ref{thm:regev-vidick-qcg} for an extended nonlocal game. That is, we will show that there exists an extended nonlocal game where the standard quantum value approaches $1$ when the dimension of the quantum systems shared by Alice and Bob approach infinity. 
 \begin{theorem} \label{thm:enlg-from-qcg}
-	Given a quantum-classical game, $G_{qc}$ with question registers $\reg{X}$ and $\reg{Y}$, there exists an extended nonlocal game, labelled as $H_t$, such that 
-	\begin{align}
-		\omega^*(H_t) = 1 - \frac{ 1 - \omega^*(G_{qc}) }{\abs{\reg{X}}^2 \abs{\reg{Y}}^2}.
+	Given a quantum-classical game, $G_{qc}$ with question registers $\reg{X}$ and $\reg{Y}$, there exists an extended nonlocal game, labelled as $H_t$, such that
+	\begin{align} \label{eq:enlg-from-qcg}
+		\omega_N^*(G_{qc}) \leq 1 - \abs{\reg{X}} \abs{\reg{Y}} \left( 1- \omega^*_{N \abs{\reg{X}} \abs{\reg{Y}}}(H_t) \right) \quad \textnormal{and} \quad \omega_N^*(H_t) \leq 1 - \frac{ 1 - \omega^*_{N \abs{\reg{X}} \abs{\reg{Y}}}(G_{qc}) }{\abs{\reg{X}} \abs{\reg{Y}}}.
 	\end{align}
 \end{theorem}
 The main idea for proving Theorem~\ref{thm:enlg-from-qcg} will involve a successive reduction from a quantum-classical game to an intermediate type of game, called a \emph{teleportation game} (that we will define formally in the next section), and finally to an extended nonlocal game. Sections~\ref{sec:teleportation-games-and-quantum-classical-games} and~\ref{sec:extended-nonlocal-games-and-teleportation-games} are dedicated to proving Theorem~\ref{thm:enlg-from-qcg}. Specifically, in Section~\ref{sec:teleportation-games-and-quantum-classical-games}, we will show how quantum-classical games are related to teleportation games, and in Section~\ref{sec:extended-nonlocal-games-and-teleportation-games}, we will show how teleportation games are related to extended nonlocal games. Once these relationships are established, we will be able to prove Theorem~\ref{thm:enlg-from-qcg}.
@@ -172,7 +172,7 @@ If $G_t$ is the name assigned to a teleportation game having the specifications 
 for all $N \geq 1$.
 \end{lemma}
 
-Prior to proceeding to the proof, we give a brief sketch to provide some intuition. In order to prove the lemma, we must prove both that $\omega_N^*(G_{qc}) \leq \omega_{N \abs{\reg{X}} \abs{\reg{Y}}}^*(G_t)$ and that $\omega_{N}^*(G_t) \leq \omega_{N\abs{\reg{X}}\abs{\reg{Y}}}^*(G_{qc})$. 
+Prior to proceeding to the proof, we give a brief sketch to provide some intuition. In order to prove Lemma~\ref{lem:qcg_eq_telep}, we must prove both that $\omega_N^*(G_{qc}) \leq \omega_{N \abs{\reg{X}} \abs{\reg{Y}}}^*(G_t)$ and that $\omega_{N}^*(G_t) \leq \omega_{N\abs{\reg{X}}\abs{\reg{Y}}}^*(G_{qc})$. 
 
 In the first inequality, we assume that Alice and Bob play honestly. That is to say, we assume that Alice and Bob play along and allow the referee to teleport registers to Alice and Bob. For this to happen, the initial state is prepared as a maximally entangled state and Alice and Bob also apply the appropriate Pauli teleportation corrections on their respective systems after they receive the questions from the referee. This direction of the proof is simply illustrating how such a strategy is carried out when Alice and Bob play honestly and is depicted in Figure~\ref{fig:teleportation-game-strategy}. 
 
@@ -315,24 +315,21 @@ We shall also define a specific extended nonlocal game, $H_t$, that consists of 
 	\end{align}		
 according to the uniform distribution and sends $x \in \SigmaA$ to Alice and $y \in \SigmaB$ to Bob. Alice responds with $a \in \GammaA$ and Bob responds with $b \in \GammaB$. 
 	
-	\item The referee prepares a state $\rho \in \Density(\X \otimes \S \otimes \Y)$ and performs a measurement
-		\begin{align} \label{eq:bell-basis-telep-game-2}
-			\left \{ \phi_{x_1}^{(\abs{\reg{X}})} : x_1 \in \SigmaA \right \} \subset \Pos(\X \otimes \X_1) \quad \textnormal{and} \quad \left \{ \phi_{y_1}^{(\abs{\reg{Y}})} : y_1 \in \SigmaB  \right \} \subset \Pos(\Y \otimes \Y_1)
-		\end{align}		
-on registers $(\reg{X},\reg{X}_1)$ and $(\reg{Y},\reg{Y}_1)$ yielding outcomes $x_1$ and $y_1$. The referee then performs a measurement with respect to the binary-valued measurement $\{ P_{a,b,x,y}, \I - P_{a,b,x,y} \}$ where
+	\item The referee prepares a state $\rho \in \Density(\X \otimes \S \otimes \Y)$ and then performs a measurement with respect to the binary-valued measurement $\{ P_{a,b,x,y}, \I - P_{a,b,x,y} \}$ where
 \begin{equation} \label{eq:ref-meas-telep-enlg}
 	\begin{aligned}
 		P_{a,b,x,y} &= \I - \phi^{(\abs{\reg{X}})}_{x} \otimes \left( \I - Q_{a,b} \right) \otimes \phi^{(\abs{\reg{Y}})}_y, \\
 		\I - P_{a,b,x,y} &= \phi^{(\abs{\reg{X}})}_{x} \otimes \left( \I - Q_{a,b} \right) \otimes \phi^{(\abs{\reg{Y}})}_y, \\
 	\end{aligned}	
 \end{equation}	 
-where $\{Q_{a,b}, \I - Q_{a,b} \} \subset \Pos(\S)$. The outcome corresponding to the measurement $P_{a,b,x,y}$ indicates that Alice and Bob win, while the other measurement indicates that they lose. Implicit in the winning and losing measurements is the relationship between $(x,y)$ and $(x_1,y_1)$ that
+where $\{Q_{a,b}, \I - Q_{a,b} \} \subset \Pos(\S)$. The outcome corresponding to the measurement $P_{a,b,x,y}$ indicates that Alice and Bob win, while the other measurement indicates that they lose. 
+\end{enumerate}
+As further intuition for the above protocol, we shall see that the last step may be thought of as a form of \index{post-selected teleportation}{\emph{post-selcted teleportation}} where the randomly selected questions $x$ and $y$ are compared to $x_1$ and $y_1$ which are hypothetical measurement results that would be obtained if the referee were to perform teleportation. Implicit in the winning and losing measurements is the relationship between $(x,y)$ and $(x_1,y_1)$ that
 \begin{enumerate}
 		\item \emph{If $x \not= x_1$ or $y \not= y_1$}: The referee immediately accepts, and therefore Alice and Bob win. 
 		\item \emph{If $x = x_1$ and $y = y_1$}: The referee performs a measurement with respect to the binary-valued measurement $\{Q_{a,b}, \I - Q_{a,b} \}$ on register $\reg{S}$.
 	\end{enumerate}
-\end{enumerate}
-As further intuition for the above protocol, we shall see that the last step may be thought of as a form of \index{post-selected teleportation}{\emph{post-selcted teleportation}} where the randomly selected questions $x$ and $y$ are compared to $x_1$ and $y_1$ which are hypothetical measurement results that would be obtained if the referee were to perform teleportation. That is, in the event where $x \not= x_1$ or $y \not= y_1$, this corresponds to a failure to teleport $\reg{X}$ or $\reg{Y}$ to Alice or Bob. Likewise, the event where $x = x_1$ and $y = y_1$ corresponds to the event where teleportation protocol would have succeeded, since if the referee \emph{were} to teleport, it would have sent $x_1$ and $y_1$ to Alice and Bob, which would influence the measurement that they would apply to their system. Since in this case $x = x_1$ and $y = y_1$ it is \emph{as if} the referee were to teleport $\reg{X}$ to Alice and $\reg{Y}$ to Bob.
+That is, in the event where $x \not= x_1$ or $y \not= y_1$, this corresponds to a failure to teleport $\reg{X}$ or $\reg{Y}$ to Alice or Bob. Likewise, the event where $x = x_1$ and $y = y_1$ corresponds to the event where teleportation protocol would have succeeded, since if the referee \emph{were} to teleport, it would have sent $x_1$ and $y_1$ to Alice and Bob, which would influence the measurement that they would apply to their system. Since in this case $x = x_1$ and $y = y_1$ it is \emph{as if} the referee were to teleport $\reg{X}$ to Alice and $\reg{Y}$ to Bob.
 
 \begin{proof}[Proof of Lemma~\ref{lem:telep-to-enlg}]
 Let $H_t$ be the extended nonlocal game as introduced above, and let it be defined in terms of the same state and measurement operators
@@ -472,10 +469,10 @@ which concludes the proof.
 	\begin{align}
 		1 - \frac{1 - \omega_{N}^*(G_t)}{\abs{\reg{X}}^2\abs{\reg{Y}}^2} = \omega_N^*(H_t).
 	\end{align}
-	It then follows that 
-	\begin{align}
-		\omega^*(H_t) = 1 - \frac{1-\omega^*(G_{qc})}{\abs{\reg{X}}^2\abs{\reg{Y}}^2}.
-	\end{align}
+	It then follows that the inequalities from equation~\eqref{eq:enlg-from-qcg} hold.
+	%\begin{align}
+%		\omega^*(H_t) = 1 - \frac{1-\omega^*(G_{qc})}{\abs{\reg{X}}^2\abs{\reg{Y}}^2}.
+%	\end{align}
 	Furthermore, it follows from Theorem~\ref{thm:regev-vidick-qcg} that there exists a quantum-classical game $G_{qc}$ where $\omega_N^*(G_{qc}) = 1$ is achieved in the limit as $N$ goes to infinity. It then follows that there also exists an extended nonlocal game $H_t$, where $\omega_N^*(H_t) = 1$ as $N$ approaches infinity. 
 \end{proof}
 
